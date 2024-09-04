@@ -13,36 +13,52 @@ export default function App() {
   const [tabForm, setTabForm] = useState(true);
 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
+    fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
       .then((res) => setUsers(res));
   }, []);
 
   const onButtonClick = () => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-    .then((response) => response.json())
-    .then((res) => setMoreUsers(res));
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((res) => setMoreUsers(res));
   };
 
   const handleUserAddition = (user: UserProps) => {
     setAddedUser(user);
-};
+  };
+
+  const renderUserCards = (userList: UserProps[]) =>
+    userList.map((user) => (
+      <MemberCard
+        id={user.id}
+        name={user.name}
+        phone={user.phone}
+        username={user.username}
+        website={user.website}
+      />
+    ));
 
   return (
     <div className="App">
-      <Tabs onChange={setTabForm}/>
-      {!tabForm && users.map((user) => <MemberCard name={user.name} phone={user.phone} username={user.username} website={user.website} />)}
-      {!tabForm && moreUsers.map((user) => <MemberCard name={user.name} phone={user.phone} username={user.username} website={user.website} />)}
-      {!tabForm && <ButtonWithLabel onClick={onButtonClick}>more users</ButtonWithLabel>}
-      {tabForm && <Form onUserAddition={handleUserAddition}  />}
+      <Tabs onChange={setTabForm} />
+      {!tabForm && (
+        <>
+          {renderUserCards(users)}
+          {renderUserCards(moreUsers)}
+          <ButtonWithLabel onClick={onButtonClick}>more users</ButtonWithLabel>
+        </>
+      )}
+      {tabForm && <Form onUserAddition={handleUserAddition} />}
       {addedUser && (
-                <MemberCard
-                    name={addedUser.name}
-                    phone={addedUser.phone}
-                    username={addedUser.username}
-                    website={addedUser.website}
-                />
-            )}
+        <MemberCard
+          id={addedUser.id}
+          name={addedUser.name}
+          phone={addedUser.phone}
+          username={addedUser.username}
+          website={addedUser.website}
+        />
+      )}
     </div>
   );
 }
