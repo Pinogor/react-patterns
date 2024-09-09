@@ -5,7 +5,6 @@ import { CardInfo } from "./parts/cardInfo";
 
 interface MemberCardProps extends UserProps {
   className?: string;
-  [key: string]: any; // Для поддержки дополнительных пропсов
 }
 
 export const MemberCard: FC<MemberCardProps> = memo(({
