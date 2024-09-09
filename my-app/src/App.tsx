@@ -1,6 +1,6 @@
 import "./App.scss";
 import { MemberCard } from "../src/components/memberCard";
-import { useEffect, useState } from "react";
+import {useEffect, useMemo, useState} from "react";
 import { UserProps } from "./components/memberCard/types";
 import { ButtonWithLabel } from "./components/buttonWithLabel";
 import Form from "./components/form";
@@ -39,13 +39,16 @@ export default function App() {
       />
     ));
 
+  const memoizedUserCards = useMemo(() => renderUserCards(users), [users]);
+  const memoizedMoreUserCards = useMemo(() => renderUserCards(moreUsers), [moreUsers]);
+
   return (
     <div className="App">
       <Tabs onChange={setTabForm} />
       {!tabForm && (
         <>
-          {renderUserCards(users)}
-          {renderUserCards(moreUsers)}
+          {memoizedUserCards}
+          {memoizedMoreUserCards}
           <ButtonWithLabel onClick={onButtonClick}>more users</ButtonWithLabel>
         </>
       )}

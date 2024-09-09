@@ -1,4 +1,4 @@
-import { FC } from "react";
+import {FC, memo} from "react";
 import "./style.scss";
 import { UserProps } from "./types";
 import { CardInfo } from "./parts/cardInfo";
@@ -8,7 +8,7 @@ interface MemberCardProps extends UserProps {
   [key: string]: any; // Для поддержки дополнительных пропсов
 }
 
-export const MemberCard: FC<MemberCardProps> = ({
+export const MemberCard: FC<MemberCardProps> = memo(({
   id,
   name,
   username,
@@ -23,4 +23,4 @@ export const MemberCard: FC<MemberCardProps> = ({
       <CardInfo id={id} username={username} phone={phone} website={website} />
     </div>
   );
-};
+});
