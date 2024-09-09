@@ -1,11 +1,16 @@
-import { Button } from "../button";
+import { FC } from 'react';
+import { Button } from '../button';
 
-export const Tabs = ({ onChange }: { onChange: (tab: boolean) => void }) => {
+interface TabsProps {
+  onChange: (tab: boolean) => void;
+  className?: string;
+}
 
-	return (
-		<div style={{ width: '100%', display: 'flex', gap: '15px', justifyContent: 'center', marginBottom: '20px' }}>
-			<Button onClick={() => onChange(false)}>form</Button>
-			<Button onClick={() => onChange(true)}>users</Button>
-		</div>
-	);
+export const Tabs: FC<TabsProps> = ({ onChange, className = '', ...props }) => {
+  return (
+    <div className={`tabs-container ${className}`} {...props}>
+      <Button onClick={() => onChange(false)}>form</Button>
+      <Button onClick={() => onChange(true)}>users</Button>
+    </div>
+  );
 };
